@@ -7,7 +7,7 @@ import torch
 import torch.backends.cudnn as cudnn
 from numpy import random
 
-import keyPointDetection as kpdet
+import RektNet.keyPointDetection as kpdet
 
 from models.experimental import attempt_load
 from utils.datasets import LoadStreams, LoadImages
@@ -15,7 +15,7 @@ from utils.general import check_img_size, non_max_suppression, apply_classifier,
     strip_optimizer, set_logging, increment_path
 from utils.plots import plot_one_box
 from utils.torch_utils import select_device, load_classifier, time_synchronized
-
+from PNP.PNP import compute
 
 
 def detect(save_img=False):
@@ -114,6 +114,7 @@ def detect(save_img=False):
                         plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=3)
 
                 res = kpdet.cropper(source, (txt_path + '.txt'), str(save_dir), kpdet_weights)
+                compute(res)
                 print(res)
             # Print time (inference + NMS)
             print('%sDone. (%.3fs)' % (s, t2 - t1))
@@ -176,3 +177,4 @@ if __name__ == '__main__':
                 strip_optimizer(opt.weights)
         else:
             detect()
+

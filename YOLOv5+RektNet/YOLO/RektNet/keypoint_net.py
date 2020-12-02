@@ -1,8 +1,8 @@
 import torch.nn as nn
 import torch
 import torch.nn.functional
-from resnet import ResNet
-from cross_ratio_loss import CrossRatioLoss
+from RektNet.resnet import ResNet
+from RektNet.cross_ratio_loss import CrossRatioLoss
 
 def print_tensor_stats(x, name):
     flattened_x = x.cpu().detach().numpy().flatten()
@@ -77,3 +77,4 @@ if  __name__=='__main__':
     loss = CrossRatioLoss()
     target = autograd.Variable(torch.randn(3, 7, 2))
     l = loss(test, target)
+

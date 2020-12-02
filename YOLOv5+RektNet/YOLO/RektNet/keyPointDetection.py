@@ -6,10 +6,10 @@ import sys
 import os
 import sys
 import shutil
-import kpdetUtils
-from kpdetUtils import vis_tensor_and_save, prep_image
+import RektNet.kpdetUtils
+from RektNet.kpdetUtils import vis_tensor_and_save, prep_image
 
-from keypoint_net import KeypointNet
+from RektNet.keypoint_net import KeypointNet
 
 
 
@@ -71,7 +71,7 @@ def detect(model,img,img_size,output,flip,rotate,iteration):
         chan -= cmin
         chan /= cmax - cmin
         out = np.concatenate((out, chan), axis=0)
-    cv2.imwrite(output_path + img_name + "_hm.jpg", out * 255)
+    #cv2.imwrite(output_path + img_name + "_hm.jpg", out * 255)
     #print(f'please check the output image here: {output_path + img_name + "_hm.jpg", out * 255}')
     print("Dots tensor for " + str(iteration) + ' cone: \n', output[1][0].cpu().data)
 
@@ -107,7 +107,7 @@ def cropper(image_path, bbFile_path, outpath, weights):
         wc = y2 - y1
         hc = x2 - x1
 
-        a = detect(model=weights', img=img, img_size=80, output=outpath, flip=False, rotate=False, iteration=i) #раньше было args.model для автономной работы
+        a = detect(model=weights, img=img, img_size=80, output=outpath, flip=False, rotate=False, iteration=i) #раньше было args.model для автономной работы
         b = vis_tensor_and_save_result(tmp, hc, wc, a, img_name, outpath, x1, y1)
         result.append(b)
 #
@@ -142,3 +142,4 @@ if __name__ == "__main__":
 
     #res = cropper(args.img, args.bbdata)
     #print(res)
+
