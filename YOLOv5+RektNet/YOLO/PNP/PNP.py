@@ -49,15 +49,18 @@ def compute(keyp_list):
       ret, rvec, tvec = cv2.solvePnP(object_points, keyp_list_np[i], camera_matrix, dist_coefs)
       XYZ_list[i] = tvec
       print('XYZ_list of cone ', i+1, ': ',XYZ_list[i], sep = '') # Выводим координаты конусов
+  return XYZ_list
 
+def dots_plot(XYZ_list):
   #####################################################
   fig = plt.figure()
   ax1 = fig.add_subplot(121)
   ax1.grid(True)
   clr = "blue"                     # Этот блок кода для визуализации положения конуса/конусов относительно камеры
                                   # Можно выкинуть целиком, если не нужен.
-  for i in range(0,l):
+  for i in range(len(XYZ_list)):
       ax1.scatter(XYZ_list[i][0], XYZ_list[i][2], s=None, c=clr)
   ax1.plot(np.array([0,0,0,0,0]), np.array([0,0,0,0,0]))
   pylab.show()
   ##################################################
+
